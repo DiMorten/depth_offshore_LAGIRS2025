@@ -104,5 +104,6 @@ Ensure you have the following installed:
 - Matplotlib
 - tqdm
 - scikit-learn
+- transformers
 
-(Use the provided `requirements.txt`)
+(Use the provided `requirements.txt` or `environment.yml`)
