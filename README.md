@@ -1,9 +1,8 @@
 
 # Depth Estimation on Offshore Oil Platforms – LAGIRS 2025
 
-This repository contains code for the evaluation and visualization of monocular depth estimation methods applied to 360-degree images of offshore oil platforms. The study was presented at ISPRS LAGIRS 2025.
+This repository contains code for the evaluation and visualization of monocular depth estimation methods applied to 360-degree images of offshore oil platforms. The study is pending approval at ISPRS LAGIRS 2025.
 
-📄 **[View Paper (PDF)](ISPRS_LAGIRS_2025___Depth_comparison2.pdf)**
 
 ## 🔍 Overview
 
@@ -31,10 +30,10 @@ It consists of 500 photospheres (360-degree images), each transformed into 6 cub
 Run depth estimation using:
 
 ```bash
-nohup python calculate_depth_all_models.py \
-    --path_input /mnt/storage/jorge/depth_paper/dataset/images/P71/RGB_faces \
-    --path_output /mnt/storage/jorge/depth_paper/dataset/images/P71/DAv2_faces \
-    --model_id DAv2 > calculate_depth_DAv2_P71.log 2>&1 &
+python calculate_depth_all_models.py \
+    --path_input /mnt/storage/jorge/depth_paper/dataset/images/PA/RGB_faces \
+    --path_output /mnt/storage/jorge/depth_paper/dataset/images/PA/DAv2_faces \
+    --model_id DAv2
 ```
 
 ### Arguments:
@@ -54,10 +53,10 @@ Evaluate model predictions and save histogram data:
 
 ```bash
 python get_metrics.py \
-    --reference_path /mnt/storage/jorge/depth_paper/dataset/images/P71/Depth_faces_decoded \
-    --predicted_path /mnt/storage/jorge/depth_paper/dataset/images/P71/Metric3D_faces/results_Metric3D/faces_depth \
-    --csv_path /mnt/storage/jorge/depth_paper/dataset/selected_photospheres_P71.csv \
-    --method Metric3D --platform P71
+    --reference_path /mnt/storage/jorge/depth_paper/dataset/images/PA/Depth_faces_decoded \
+    --predicted_path /mnt/storage/jorge/depth_paper/dataset/images/PA/Metric3D_faces/results_Metric3D/faces_depth \
+    --csv_path /mnt/storage/jorge/depth_paper/dataset/selected_photospheres_PA.csv \
+    --method Metric3D --platform PA
 ```
 
 ### Arguments:
@@ -92,20 +91,6 @@ python get_visual_results.py
 
 This script visualizes a fixed set of depth prediction samples (`depth_filename0.npy`, `depth_filename1.npy`, `depth_filename3.npy`) for each method.
 
----
-
-## 📰 Citation
-
-If you use this code, please cite our work (bibtex available in the paper).
-
----
-
-## 📎 Paper
-
-**Title:** *Advancing Offshore Safety: Monocular Depth Estimation from 360-Degree Images for Enhanced Oil Platform Inspection*
-
-**Conference:** ISPRS LAGIRS 2025  
-**PDF:** [ISPRS_LAGIRS_2025___Depth_comparison2.pdf](ISPRS_LAGIRS_2025___Depth_comparison2.pdf)
 
 ---
 
@@ -120,4 +105,4 @@ Ensure you have the following installed:
 - tqdm
 - scikit-learn
 
-(Use the provided `requirements.txt` if available.)
+(Use the provided `requirements.txt`)
