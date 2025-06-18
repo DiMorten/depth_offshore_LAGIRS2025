@@ -130,6 +130,52 @@ def plot_multi_histograms(histogram_data_list, model_labels, lims,
     plt.close()
     print(f"Multi-model histogram plot saved to {output_path}")
 
+def plot_individual_histograms(histogram_data_list, model_labels, lims,
+                               output_folder='individual_histograms'):
+    """
+    Plot and save individual histogram plots per model with ±1 and ±2 std bands,
+    and a dashed diagonal y=x line without legend entry.
+
+    Args:
+        histogram_data_list: List of tuples, each with (centers, means, std1_lows, std1_highs,
+                              std2_lows, std2_highs, _) for one model.
+        model_labels: List of model names.
+        lims: Dict with keys 'xlim', 'ylim', 'yticks', 'xticks'.
+        output_folder: Where to save the individual plots.
+    """
+    os.makedirs(output_folder, exist_ok=True)
+    colors = ['orange', 'blue', 'green', 'purple']
+
+    for idx, (data, label) in enumerate(zip(histogram_data_list, model_labels)):
+        centers, means, std1_lows, std1_highs, std2_lows, std2_highs, _ = data
+        color = colors[idx % len(colors)]
+
+        plt.figure(figsize=(6, 4))
+        plt.plot(centers, means, marker='o', linestyle='-', color=color, label='Mean')
+        plt.fill_between(centers, std2_lows, std2_highs, color=color, alpha=0.15, label='±2×Std')
+        plt.fill_between(centers, std1_lows, std1_highs, color=color, alpha=0.3, label='±1×Std')
+
+        # Add diagonal line y = x (dark gray, dashed, no legend)
+        min_val = max(lims["xlim"][0], lims["ylim"][0])
+        max_val = min(lims["xlim"][1], lims["ylim"][1])
+        plt.plot([min_val, max_val], [min_val, max_val], linestyle='--', color='dimgray', linewidth=1)
+
+        plt.xlabel("Predicted Value Bin Center (meters)")
+        plt.ylabel("Reference Value (meters)")
+        plt.title(f"{label} – Mean and Std Bands")
+        plt.xlim(lims["xlim"])
+        plt.ylim(lims["ylim"])
+        plt.xticks(lims["xticks"])
+        plt.yticks(lims["yticks"])
+        plt.grid(True, axis='both')
+        plt.legend(loc='upper left', fontsize=8)
+        plt.tight_layout()
+
+        save_path = os.path.join(output_folder, f"{label}_histogram.png")
+        plt.savefig(save_path, dpi=180, bbox_inches='tight')
+        plt.close()
+        print(f"Saved individual histogram for {label} at: {save_path}")
+        
 platform = "PA"
 
 
@@ -186,3 +232,6 @@ histogram_data_list = [
 
 plot_multi_histograms(histogram_data_list, model_labels, lims,
     output_path=f'overlaid_multi_histogram_{platform}.png')
+
+plot_individual_histograms(histogram_data_list, model_labels, lims,
+    output_folder=f'individual_histograms_{platform}')
