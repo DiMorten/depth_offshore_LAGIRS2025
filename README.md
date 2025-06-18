@@ -77,7 +77,7 @@ Visualize per-bin accuracy for all models:
 python plot_histogram_multiple_models.py
 ```
 
-This loads files in the format `histogram_data_before_{method}_{platform}.pkl` and produces overlaid plots of predicted vs. reference depth per bin.
+This loads files in the format `histogram_data_{method}_{platform}.pkl` and produces overlaid plots of predicted vs. reference depth per bin.
 
 ---
 
@@ -89,7 +89,7 @@ Generate qualitative comparisons between models:
 python get_visual_results.py
 ```
 
-This script visualizes a fixed set of depth prediction samples (`depth_filename0.npy`, `depth_filename1.npy`, `depth_filename3.npy`) for each method.
+This script visualizes a fixed set of depth prediction samples (`depth_filename0.npy`, `depth_filename1.npy`, `depth_filename2.npy`) for each method.
 
 
 ---
